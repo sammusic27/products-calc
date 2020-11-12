@@ -8,14 +8,14 @@ const packageData = require('./package.json')
 module.exports = {
   entry: path.resolve(__dirname, 'src/index.jsx'),
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle-[hash].js'
+    path: path.resolve(__dirname, './docs'),
+    filename: 'bundle-[contenthash].js'
   },
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       title: 'Product Calculator ' + packageData.version,
-      template: path.resolve(__dirname, 'src/index.html')
+      template: path.resolve(__dirname, 'assets/index.html')
     }),
     new CleanWebpackPlugin(),
   ],
@@ -42,10 +42,10 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.scss$/i,
         use: [
           // // Creates `style` nodes from JS strings
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           // Translates CSS into CommonJS
           'css-loader',
           // Compiles Sass to CSS
@@ -55,6 +55,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.jsx', '.js', '.json', '.css', '.ts', '.tsx'],
+    extensions: ['.jsx', '.js', '.json', '.scss', '.css', '.ts', '.tsx'],
   }
 };

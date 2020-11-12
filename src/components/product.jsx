@@ -8,7 +8,7 @@ export const ProductField = function(props) {
   }
 
   return (
-    <Form.Group as={Row} controlId="formPlaintextEmail" key={props.product.name}>
+    <Form.Group as={Row} controlId="product" key={props.product.name}>
       <Form.Label column sm="2">{props.product.label}</Form.Label>
       <Col sm="4">
         <InputGroup>
@@ -18,7 +18,7 @@ export const ProductField = function(props) {
           </InputGroup.Prepend>
         </InputGroup>
       </Col>
-      <Col sm="3">
+      <Col sm="4">
         <InputGroup>
           <Form.Control type="number" onChange={(e) => handleChange(e.target.value)} min="0" step="1" defaultValue={props.product.defaultCount} />
           <InputGroup.Prepend>

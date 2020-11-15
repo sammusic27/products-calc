@@ -22,12 +22,27 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
+      - name: Github Action genshdoc
+        id: action-genshdoc
+        uses: vargiuscuola/genshdoc@master
+
+      - name: genshdoc result
+        run: echo "The result of genshdoc Action was ${{ steps.action-genshdoc.outputs.result }}"
+
+        # Runs a single command using the runners shell
       - name: Run npm run doc
         run: npm run doc
 
-      # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #  run: |
-      #    echo Add other actions to build,
-      #    echo test, and deploy your project.
+      - name: Commit files
+        run: |
+          echo ${{ github.ref }}
+          git add .
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "CI: Automated build push" -a | exit 0
+
+      - name: Push changes
+        if: github.ref == 'refs/heads/master'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

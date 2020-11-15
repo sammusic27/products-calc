@@ -1,3 +1,5 @@
 .idea
+input
 dist
+docs
 node_modules

@@ -3,24 +3,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
-const packageData = require('./package.json')
+const packageData = require('../package.json')
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.jsx'),
+  entry: path.resolve(__dirname, '../src/index.jsx'),
   output: {
-    path: path.resolve(__dirname, './docs'),
+    path: path.resolve(__dirname, '../dist'),
     filename: 'bundle-[contenthash].js'
   },
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       title: 'Product Calculator ' + packageData.version,
-      template: path.resolve(__dirname, 'assets/index.html')
+      template: path.resolve(__dirname, '../assets/index.html')
     }),
     new CleanWebpackPlugin(),
   ],
-  watch: true,
-  mode: 'development',
   module: {
     rules: [
       {

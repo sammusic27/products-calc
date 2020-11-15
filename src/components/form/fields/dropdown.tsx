@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
-import {Option} from "../../utils/models/models";
+import {Option} from "../../../utils/models/models";
 
 type Props = {
   name: string,

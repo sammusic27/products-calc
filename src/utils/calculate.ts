@@ -2,10 +2,8 @@ import cloneDeep from 'lodash/cloneDeep';
 import forEach from 'lodash/forEach';
 import {Product} from "./models/models";
 
-export function calcForm(product: Product, values: any){
+export function calcForm(product: Product, count: number, values: any){
   const data = cloneDeep(values);
-  const count = parseInt(data['count']);
-  delete data.count;
 
   let price = 0;
   forEach(data, (item, key) => {

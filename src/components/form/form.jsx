@@ -10,54 +10,42 @@ export function FormComponent(props){
   const { defaultCount, properties } = product;
   const [count, setCount] = useState(defaultCount);
   const [result, setResult] = useState(0);
-  const [state, setState] = useState()
-  const propertiesRef = useRef(null);
+  const [values, setValues] = useState();
 
-  useEffect(() => {
-    /**
-     * We don't know exactly when is `ref.current` going to
-     * point to a DOM element. But we're interested in logging
-     * when it happens.
-     */
-    if (propertiesRef.current) {
-      console.log(propertiesRef.current)
+  const handleCount = (count) => {
+    setCount(count);
+    setResult(calcForm(product, parseInt(count), values));
+  }
 
-      /**
-       * Try commenting and uncommenting the next line, and see
-       * the amount of renderings
-       */
-      setState('bar');
-    }
-
-  }, [propertiesRef]);
-
+  const handleChange = (data) => {
+    setValues(data);
+    setResult(calcForm(product, parseInt(count), data));
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const values = propertiesRef.current.getValues();
 
-    setResult(calcForm(product, parseInt(count), values))
+    setResult(calcForm(product, parseInt(count), values));
   }
 
   return (
     <Form>
-        <ProductField product={product} onChange={(value) => setCount(value)} />
-      {state}
-        <hr />
-        <Properties
-          ref={propertiesRef}
-          properties={properties}
-        />
-        <Row>
-          <Col>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
-              Посчитать
-            </Button>
-          </Col>
-          <Col>
-            {result} UAH
-          </Col>
-        </Row>
+      <ProductField product={product} onChange={handleCount} />
+      <hr />
+      <Properties
+        onChange={handleChange}
+        properties={properties}
+      />
+      <Row>
+        <Col>
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
+            Посчитать
+          </Button>
+        </Col>
+        <Col>
+          {result} UAH
+        </Col>
+      </Row>
     </Form>
   );
 }

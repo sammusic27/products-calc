@@ -35,7 +35,9 @@ function defaultValues(properties: Array<Property>){
 
 export function Properties(props: Props){
   const [values, setValues] = useState(() => {
-    return defaultValues(props.properties);
+    const data = defaultValues(props.properties);
+    props.onChange && props.onChange(data);
+    return data;
   });
 
   const handleChange = (name: string, value: any) => {
@@ -44,10 +46,6 @@ export function Properties(props: Props){
     setValues(data);
     props.onChange && props.onChange(data);
   }
-
-  const getValues = () => {
-    return values;
-  };
 
   const fields = props.properties.map((property) => {
     const { name, label } = property;

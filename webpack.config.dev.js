@@ -1,7 +1,6 @@
-const merge = require('lodash/merge');
 const webpackConfCommon = require('./webpack/webpack.common');
 
-module.exports = merge(webpackConfCommon, {
+module.exports = Object.assign(webpackConfCommon, {
   watch: true,
   mode: 'development'
 });

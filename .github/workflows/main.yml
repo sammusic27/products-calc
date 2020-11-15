@@ -22,6 +22,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Runs a single command using the runners shell
+      - name: run install
+        run: npm i
+
       - name: Github Action genshdoc
         id: action-genshdoc
         uses: vargiuscuola/genshdoc@master
@@ -29,7 +33,6 @@ jobs:
       - name: genshdoc result
         run: echo "The result of genshdoc Action was ${{ steps.action-genshdoc.outputs.result }}"
 
-        # Runs a single command using the runners shell
       - name: Run npm run doc
         run: npm run doc
 

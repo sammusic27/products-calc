@@ -30,7 +30,12 @@ export const RadioField = function(props: Props) {
     <Form.Group as={Row} controlId={props.name}>
       <Form.Label column sm={props.sizeLabel}>{props.label}</Form.Label>
       <Col sm={props.sizeField}>
-        <ToggleButtonGroup type="radio" onChange={handleChange} name="options" defaultValue={value}>
+        <ToggleButtonGroup
+          type="radio"
+          onChange={handleChange}
+          name="options"
+          defaultValue={value}
+          size="sm">
           {options}
         </ToggleButtonGroup>
       </Col>

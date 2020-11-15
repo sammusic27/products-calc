@@ -1,102 +1,146 @@
 import React, {useState} from 'react';
+import {Table} from 'react-bootstrap';
 import get from 'lodash/get';
 import cloneDeep from 'lodash/cloneDeep';
 import {CheckboxField} from "./fields/checkbox";
 import {RadioField} from "./fields/radio";
 import {InputField} from "./fields/input";
 import {DropdownField} from "./fields/dropdown";
-import {Property} from "../../utils/models/models";
+import {getPriceFromPropertyByParameters, getTiersFromPropertyByValue} from "../../utils/calculate";
+import {TiersComponent} from "../tiers";
 
 type Props = {
   properties: Array<any>,
-  onChange?: (values: any) => void
+  count: number,
+  onChange?: (values: any) => void,
+  values: any
 };
 
-function defaultValues(properties: Array<Property>){
+
+function parse(enabled: any, values: any){
   const data: any = {};
-  properties.forEach(prop => {
-    switch (prop.type){
-      case 'text':
-      case 'number':
-        data[prop.name] = prop.price;
-        break;
-      case 'radio':
-      case 'dropdown':
-        data[prop.name] = get(prop, 'options[0].value', 0);
-        break;
-      case 'checkbox':
-        data[prop.name] = true;
-        break;
+  for(let i in values){
+    if(enabled[i]){
+      data[i] = values[i];
     }
-  });
+  }
 
   return data;
 }
 
 export function Properties(props: Props){
-  const [values, setValues] = useState(() => {
-    const data = defaultValues(props.properties);
-    props.onChange && props.onChange(data);
+  const [values, setValues] = useState(props.values);
+  const [enabled, setEnabled] = useState(() => {
+    const data:any = {};
+    for(let i in values){
+      data[i] = !!values[i];
+    }
     return data;
   });
+
+  const handleChangeValue = (name: string, value: boolean) => {
+    const data = cloneDeep(enabled);
+    data[name] = value;
+    setEnabled(data);
+    props.onChange && props.onChange(parse(data, values));
+  };
 
   const handleChange = (name: string, value: any) => {
     const data = cloneDeep(values);
     data[name] = value;
     setValues(data);
-    props.onChange && props.onChange(data);
+    props.onChange && props.onChange(parse(enabled, data));
   }
 
   const fields = props.properties.map((property) => {
     const { name, label } = property;
     const handleChangeField = (value: any) => handleChange(name, value);
 
+    let component = null;
+
     switch(property.type){
       case "checkbox":
-        return <CheckboxField
-          key={name}
+        component = <CheckboxField
           name={name}
           onChange={handleChangeField}
           label={label}
           value={values[name]}
         />;
+        break;
       case "radio":
-        return <RadioField
-          key={name}
+        component = <RadioField
           name={name}
           onChange={handleChangeField}
           options={property.options}
           label={label}
           value={values[name]}
         />;
+        break;
       case "text":
       case "number":
-        return <InputField
-          key={name}
+        component = <InputField
           name={name}
           type={property.type}
           onChange={handleChangeField}
           label={label}
           value={values[name]}
         />;
+        break;
       case "dropdown":
-        return <DropdownField
-          key={name}
+        component = <DropdownField
           name={name}
           onChange={handleChangeField}
           options={property.options}
           label={label}
           value={values[name]}
         />;
+        break;
       default:
-        return <div>Не поддерживаемый тип: {property.type}</div>;
+        component = <div>Не поддерживаемый тип: {property.type}</div>;
+        break;
     }
+
+    const propertyPrice = getPriceFromPropertyByParameters(property, values[name], props.count);
+    const propertyPriceFull = propertyPrice * props.count;
+    const hiddenRow = !enabled[name] ? 'hidden-row' : '';
+    const tiers = getTiersFromPropertyByValue(property, propertyPrice);
+
+    return (
+      <tr key={name} className={hiddenRow}>
+        <td>
+          <CheckboxField
+            onChange={(value) => handleChangeValue(name, value)}
+            value={enabled[name]}
+            name={name}
+          />
+        </td>
+        <td>
+          {component}
+        </td>
+        <td>
+          {tiers.length ? (<TiersComponent tiers={tiers} count={props.count} />) : propertyPrice }
+        </td>
+        <td>
+          {propertyPriceFull}
+        </td>
+      </tr>
+    );
   });
 
   return (
-    <div>
-      {fields}
-    </div>
+    <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Параметр</th>
+          <th>Цена Услуги</th>
+          <th>Общая Цена</th>
+        </tr>
+      </thead>
+      <tbody>
+        {fields}
+      </tbody>
+    </Table>
   );
 }
 

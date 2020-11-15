@@ -3,11 +3,11 @@ import { Form, Row, Col } from 'react-bootstrap';
 
 type Props = {
   name: string,
-  label: string,
-  value: number | string,
+  label?: string,
+  value?: number | string,
   sizeLabel?: number,
   sizeField?: number,
-  onChange: ((val: any) => void)
+  onChange?: ((val: any) => void)
 };
 
 export const CheckboxField = function(props: Props) {
@@ -18,15 +18,22 @@ export const CheckboxField = function(props: Props) {
     props.onChange && props.onChange(e.target.checked)
   };
 
+  const showLabel = () => {
+    if(props.label){
+      return <Form.Label column sm={props.sizeLabel}>{props.label}</Form.Label>;
+    }
+    return null;
+  }
+
   return (
     <Form.Group as={Row} controlId={props.name}>
-      <Form.Label column sm={props.sizeLabel}>{props.label}</Form.Label>
+      {showLabel()}
       <Col sm={props.sizeField}>
         <Form.Check
           onChange={handleChange}
           type="checkbox"
           name={props.name}
-          checked={value}
+          checked={!!value}
         />
       </Col>
     </Form.Group>

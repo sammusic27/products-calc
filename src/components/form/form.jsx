@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import get from 'lodash/get';
 
-import { ProductField } from '../product';
+import { ProductField } from '../calc/product';
 import {calcForm} from "../../utils/calculate";
 import {Properties} from "./properties";
 
@@ -70,6 +70,7 @@ export function FormComponent(props){
         properties={properties}
         count={count}
         values={values}
+        name={product.name}
       />
       <Row>
         <Col>

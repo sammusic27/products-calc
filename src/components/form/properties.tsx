@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Table} from 'react-bootstrap';
-import get from 'lodash/get';
 import cloneDeep from 'lodash/cloneDeep';
 import {CheckboxField} from "./fields/checkbox";
 import {RadioField} from "./fields/radio";
 import {InputField} from "./fields/input";
 import {DropdownField} from "./fields/dropdown";
 import {getPriceFromPropertyByParameters, getTiersFromPropertyByValue} from "../../utils/calculate";
-import {TiersComponent} from "../tiers";
+import {TiersComponent} from "../calc/tiers";
 
 type Props = {
+  name: string,
   properties: Array<any>,
   count: number,
   onChange?: (values: any) => void,
@@ -38,18 +38,27 @@ export function Properties(props: Props){
     return data;
   });
 
-  const handleChangeValue = (name: string, value: boolean) => {
-    const data = cloneDeep(enabled);
-    data[name] = value;
+  useEffect(() => {
+    const data:any = {};
+    for(let i in props.values){
+      data[i] = !!props.values[i];
+    }
+    setValues(props.values);
     setEnabled(data);
-    props.onChange && props.onChange(parse(data, values));
+  }, [props.name]);
+
+  const handleEnabledValues = (name: string, value: boolean) => {
+    const enabledNew = cloneDeep(enabled);
+    enabledNew[name] = value;
+    setEnabled(enabledNew);
+    props.onChange && props.onChange(parse(enabledNew, values));
   };
 
   const handleChange = (name: string, value: any) => {
-    const data = cloneDeep(values);
-    data[name] = value;
-    setValues(data);
-    props.onChange && props.onChange(parse(enabled, data));
+    const valuesNew = cloneDeep(values);
+    valuesNew[name] = value;
+    setValues(valuesNew);
+    props.onChange && props.onChange(parse(enabled, valuesNew));
   }
 
   const fields = props.properties.map((property) => {
@@ -109,7 +118,7 @@ export function Properties(props: Props){
       <tr key={name} className={hiddenRow}>
         <td>
           <CheckboxField
-            onChange={(value) => handleChangeValue(name, value)}
+            onChange={(value) => handleEnabledValues(name, value)}
             value={enabled[name]}
             name={name}
           />

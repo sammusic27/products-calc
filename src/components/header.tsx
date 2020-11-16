@@ -9,8 +9,8 @@ export function Header(){
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/list">Список</Nav.Link>
+          <Nav.Link href="/">Calc</Nav.Link>
+          <Nav.Link href="/list">Product List</Nav.Link>
         </Nav>
         <Navbar.Text>
           v. {pkg.version}

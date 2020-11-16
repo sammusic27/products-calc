@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
-import {getProductPrice} from "../utils/calculate";
+import {getProductPrice} from "../../utils/calculate";
 import {TiersComponent} from "./tiers";
 
 export const ProductField = function(props) {

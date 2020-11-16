@@ -33,6 +33,10 @@ export function getProductPrice(product: Product, count: number){
 export function getPriceFromPropertyByParameters(property: any, value: any = null, count: number = 1){
   let price = 0;
 
+  if(!property){
+    return price;
+  }
+
   switch(property.type){
     case 'radio':
     case 'dropdown':

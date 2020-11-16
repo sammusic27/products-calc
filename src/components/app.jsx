@@ -33,7 +33,7 @@ export function App(){
         <Switch>
           <Route
             exact
-            path="/"
+            path="/products-calc/"
             render={() => (
               <div className="container">
                 <Header />
@@ -50,11 +50,11 @@ export function App(){
           />
           <Route
             exact
-            path="/list"
+            path="/products-calc/list"
             render={() => (
               <div>Test</div>
             )} />
-          <Redirect to="/" />
+          <Redirect to="/products-calc/" />
         </Switch>
       </div>
     </Router>

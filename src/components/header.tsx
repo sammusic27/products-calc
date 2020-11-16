@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import pkg from '../../package.json';
 
 export function Header(){
@@ -8,6 +8,10 @@ export function Header(){
       <Navbar.Brand href="#home">Product Calc</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse className="justify-content-end">
+        <Nav className="mr-auto">
+          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/list">Список</Nav.Link>
+        </Nav>
         <Navbar.Text>
           v. {pkg.version}
         </Navbar.Text>

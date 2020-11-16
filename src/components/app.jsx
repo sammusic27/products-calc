@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
 
 import { products } from '../../data/data';
 import { FormComponent } from "./form/form";
@@ -22,16 +28,36 @@ export function App(){
   }
 
   return (
-    <div className="container">
-      <Header />
-      <DropdownField
-        label="Продукт"
-        options={options}
-        onChange={handleChange}
-        name="product"
-      />
-      <hr />
-      {product ? <FormComponent product={product} /> : null}
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div className="container">
+                <Header />
+                <DropdownField
+                  label="Продукт"
+                  options={options}
+                  onChange={handleChange}
+                  name="product"
+                />
+                <hr />
+                {product ? <FormComponent product={product} /> : null}
+              </div>
+            )}
+          />
+          <Route
+            exact
+            path="/list"
+            render={() => (
+              <div>Test</div>
+            )} />
+          <Redirect to="/" />
+        </Switch>
+      </div>
+    </Router>
+
   );
 }

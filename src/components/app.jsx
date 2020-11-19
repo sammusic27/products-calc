@@ -6,7 +6,6 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-const PATH = window.location.hostname === 'localhost' ? '' : `/products-calc`;
 import { Header } from "./header";
 import { Calculator } from './calc/calculator';
 import { ProductList } from './productList/productList';
@@ -19,12 +18,12 @@ export function App(){
         <Switch>
           <Route
             exact
-            path={`${PATH}/`}
+            path="/"
             component={Calculator}
           />
           <Route
             exact
-            path={`${PATH}/list`}
+            path="/list"
             component={ProductList} />
           <Redirect to="/products-calc/" />
         </Switch>

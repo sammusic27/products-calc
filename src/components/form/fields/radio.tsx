@@ -7,8 +7,9 @@ type Props = {
   label: string,
   value: number | string,
   options: Array<Option>,
-  sizeLabel?: number,
-  sizeField?: number,
+  size: undefined | 'sm' | 'lg',
+  smLabel?: number,
+  smField?: number,
   onChange: ((val: any) => void)
 };
 
@@ -28,14 +29,20 @@ export const RadioField = function(props: Props) {
 
   return (
     <Form.Group as={Row} controlId={props.name}>
-      <Form.Label column sm={props.sizeLabel}>{props.label}</Form.Label>
-      <Col sm={props.sizeField}>
+      <Form.Label
+        column={props.size}
+        sm={props.smLabel}
+      >
+        {props.label}
+      </Form.Label>
+      <Col sm={props.smField}>
         <ToggleButtonGroup
           type="radio"
           onChange={handleChange}
           name="options"
           defaultValue={value}
-          size="sm">
+          size={props.size}
+        >
           {options}
         </ToggleButtonGroup>
       </Col>
@@ -44,7 +51,8 @@ export const RadioField = function(props: Props) {
 }
 
 RadioField.defaultProps = {
-  sizeLabel: 2,
-  sizeField: 10,
+  size: 'sm',
+  smLabel: 2,
+  smField: 10,
   options: []
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-const PATH = window.location.hostname === 'localhost' ? '' : '/products-calc/';
+const PATH = window.location.hostname === 'localhost' ? '' : '/products-calc';
 import { Calculator } from './calc/calculator';
 import { ProductList } from './productList/productList';
 import {Header} from "./header";
@@ -16,6 +16,7 @@ export function App(){
     <Router>
       <div className="container">
         <Header />
+        {window.location.hostname}
         <Switch>
           <Route
             exact

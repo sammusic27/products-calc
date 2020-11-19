@@ -1,5 +1,7 @@
 body{
   background: #eee;
+  font-size: 0.875rem;
+  line-height: 1.3;
 }
 tr.hidden-row{
   opacity: 0.3;
@@ -10,4 +12,19 @@ tr.hidden-row{
 }
 .text-weight-bold{
   font-weight: bold;
+}
+
+.checkbox-holder{
+  margin: 6px 5px 0;
+}
+
+.tier-list{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+
+  li{
+    white-space: nowrap;
+  }
 }

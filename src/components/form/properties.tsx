@@ -7,6 +7,8 @@ import {InputField} from "./fields/input";
 import {DropdownField} from "./fields/dropdown";
 import {getPriceFromPropertyByParameters, getTiersFromPropertyByValue} from "../../utils/calculate";
 import {TiersComponent} from "../calc/tiers";
+import {Price} from "../price/price";
+import './properties.scss';
 
 type Props = {
   name: string,
@@ -118,6 +120,7 @@ export function Properties(props: Props){
       <tr key={name} className={hiddenRow}>
         <td>
           <CheckboxField
+            smField={1}
             onChange={(value) => handleEnabledValues(name, value)}
             value={enabled[name]}
             name={name}
@@ -127,10 +130,10 @@ export function Properties(props: Props){
           {component}
         </td>
         <td>
-          {tiers.length ? (<TiersComponent tiers={tiers} count={props.count} />) : propertyPrice }
+          {tiers.length ? (<TiersComponent tiers={tiers} count={props.count} />) : (<Price price={propertyPrice} />) }
         </td>
         <td>
-          {propertyPriceFull}
+          <Price price={propertyPriceFull} />
         </td>
       </tr>
     );
@@ -140,10 +143,10 @@ export function Properties(props: Props){
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
-          <th>#</th>
+          <th className="first-action-column">#</th>
           <th>Параметр</th>
-          <th>Цена Услуги</th>
-          <th>Общая Цена</th>
+          <th className="price-column">Цена Услуги</th>
+          <th className="price-column">Общая Цена</th>
         </tr>
       </thead>
       <tbody>

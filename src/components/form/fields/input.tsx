@@ -8,8 +8,9 @@ type Props = {
   isEnabledInputGroup: boolean,
   inputGroupLabel: string,
   value: number | string,
-  sizeLabel?: number,
-  sizeField?: number,
+  size: undefined | 'sm' | 'lg',
+  smLabel?: number,
+  smField?: number,
   onChange: ((val: any) => void)
 };
 
@@ -33,13 +34,19 @@ export const InputField = function(props: Props) {
 
   return (
     <Form.Group as={Row} controlId={props.name}>
-      <Form.Label column sm={props.sizeLabel}>{props.label}</Form.Label>
-      <Col sm={props.sizeField}>
+      <Form.Label
+        column={props.size}
+        sm={props.smLabel}
+      >
+        {props.label}
+      </Form.Label>
+      <Col sm={props.smField}>
         <InputGroup>
           <Form.Control
-              type={props.type}
-              onChange={handleChange}
-              value={value}
+            size={props.size}
+            type={props.type}
+            onChange={handleChange}
+            value={value}
           />
           {toDisplayInputGroup()}
         </InputGroup>
@@ -49,8 +56,9 @@ export const InputField = function(props: Props) {
 }
 
 InputField.defaultProps = {
-  sizeLabel: 2,
-  sizeField: 10,
+  size: "sm",
+  smLabel: 2,
+  smField: 10,
   isEnabledInputGroup: false,
   inputGroupLabel: ''
 };

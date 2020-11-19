@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import { ProductField } from '../calc/product';
 import {calcForm} from "../../utils/calculate";
 import {Properties} from "./properties";
+import { Price } from "../price/price";
 
 function defaultValues(properties = []){
   const data = {};
@@ -79,7 +80,7 @@ export function FormComponent(props){
           </Button>
         </Col>
         <Col>
-          <span className="price-holder">{result} UAH</span>
+          <Price price={result} size={"xl"} />
         </Col>
       </Row>
     </Form>

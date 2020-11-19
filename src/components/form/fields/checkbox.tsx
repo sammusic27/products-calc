@@ -5,8 +5,9 @@ type Props = {
   name: string,
   label?: string,
   value?: number | string,
-  sizeLabel?: number,
-  sizeField?: number,
+  size: undefined | 'sm' | 'lg',
+  smLabel?: number,
+  smField?: number,
   onChange?: ((val: any) => void)
 };
 
@@ -20,7 +21,12 @@ export const CheckboxField = function(props: Props) {
 
   const showLabel = () => {
     if(props.label){
-      return <Form.Label column sm={props.sizeLabel}>{props.label}</Form.Label>;
+      return <Form.Label
+                column={props.size}
+                sm={props.smLabel}
+              >
+                {props.label}
+              </Form.Label>;
     }
     return null;
   }
@@ -28,10 +34,11 @@ export const CheckboxField = function(props: Props) {
   return (
     <Form.Group as={Row} controlId={props.name}>
       {showLabel()}
-      <Col sm={props.sizeField}>
+      <Col sm={props.smField}>
         <Form.Check
           onChange={handleChange}
           type="checkbox"
+          className="checkbox-holder"
           name={props.name}
           checked={!!value}
         />
@@ -41,6 +48,7 @@ export const CheckboxField = function(props: Props) {
 }
 
 CheckboxField.defaultProps = {
-  sizeLabel: 2,
-  sizeField: 10
+  size: "sm",
+  smLabel: 2,
+  smField: 10,
 };

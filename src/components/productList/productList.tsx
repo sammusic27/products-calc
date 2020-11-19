@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux'
 import {Table} from 'react-bootstrap';
 import {Product} from "../../utils/models/models";
+import { Price } from '../price/price';
 
 interface RootState {
   products: any
@@ -24,7 +25,7 @@ export function ProductList(){
             return (
               <tr key={product.name}>
                 <td>{product.label}</td>
-                <td>{product.price}</td>
+                <td><Price price={product.price}/></td>
               </tr>
             );
           })}

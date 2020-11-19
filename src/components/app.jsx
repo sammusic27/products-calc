@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-const PATH = window.location.hostname === 'localhost' ? '' : `/${window.location.hostname}/products-calc`;
+const PATH = window.location.hostname === 'localhost' ? '' : `/products-calc`;
 import { Header } from "./header";
 import { Calculator } from './calc/calculator';
 import { ProductList } from './productList/productList';

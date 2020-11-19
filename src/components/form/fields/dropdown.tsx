@@ -5,6 +5,7 @@ import {Option} from "../../../utils/models/models";
 type Props = {
   name: string,
   label: string,
+  labelFor?: undefined | string,
   value?: number | string,
   options: Array<Option>,
   size: undefined | 'sm' | 'lg',
@@ -29,10 +30,11 @@ export const DropdownField = function(props: Props) {
   });
 
   return (
-    <Form.Group as={Row} controlId={props.name}>
+    <Form.Group as={Row}>
       <Form.Label
         column={props.size}
         sm={props.smLabel}
+        htmlFor={props.labelFor}
       >
         {props.label}
       </Form.Label>

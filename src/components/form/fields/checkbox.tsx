@@ -5,6 +5,8 @@ type Props = {
   name: string,
   label?: string,
   value?: number | string,
+  id?: undefined | string,
+  labelFor?: undefined | string,
   size: undefined | 'sm' | 'lg',
   smLabel?: number,
   smField?: number,
@@ -28,6 +30,7 @@ export const CheckboxField = function(props: Props) {
       return <Form.Label
                 column={props.size}
                 sm={props.smLabel}
+                htmlFor={props.labelFor}
               >
                 {props.label}
               </Form.Label>;
@@ -36,7 +39,7 @@ export const CheckboxField = function(props: Props) {
   }
 
   return (
-    <Form.Group as={Row} controlId={props.name}>
+    <Form.Group as={Row}>
       {showLabel()}
       <Col sm={props.smField}>
         <Form.Check
@@ -45,6 +48,7 @@ export const CheckboxField = function(props: Props) {
           className="checkbox-holder"
           name={props.name}
           checked={!!value}
+          id={props.id}
         />
       </Col>
     </Form.Group>

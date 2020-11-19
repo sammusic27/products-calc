@@ -4,6 +4,7 @@ import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 type Props = {
   name: string,
   label: string,
+  labelFor?: undefined | string,
   type: string,
   isEnabledInputGroup: boolean,
   inputGroupLabel: string,
@@ -33,10 +34,13 @@ export const InputField = function(props: Props) {
   }
 
   return (
-    <Form.Group as={Row} controlId={props.name}>
+    <Form.Group
+      as={Row}
+    >
       <Form.Label
         column={props.size}
         sm={props.smLabel}
+        htmlFor={props.labelFor}
       >
         {props.label}
       </Form.Label>

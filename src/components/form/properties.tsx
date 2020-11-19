@@ -55,6 +55,7 @@ export function Properties(props: Props){
     const formValues = props.values;
     const enabled = props.enabled;
     let component = null;
+    const id = 'enabled-'+name;
 
     switch(property.type){
       case "checkbox":
@@ -62,6 +63,7 @@ export function Properties(props: Props){
           name={name}
           onChange={handleChangeField}
           label={label}
+          labelFor={id}
           value={formValues[name]}
         />;
         break;
@@ -71,6 +73,7 @@ export function Properties(props: Props){
           onChange={handleChangeField}
           options={property.options}
           label={label}
+          labelFor={id}
           value={formValues[name]}
         />;
         break;
@@ -81,6 +84,7 @@ export function Properties(props: Props){
           type={property.type}
           onChange={handleChangeField}
           label={label}
+          labelFor={id}
           value={formValues[name]}
         />;
         break;
@@ -90,6 +94,7 @@ export function Properties(props: Props){
           onChange={handleChangeField}
           options={property.options}
           label={label}
+          labelFor={id}
           value={formValues[name]}
         />;
         break;
@@ -111,6 +116,7 @@ export function Properties(props: Props){
             onChange={(value) => handleEnabledValues(name, value)}
             value={enabled[name]}
             name={name}
+            id={id}
           />
         </td>
         <td>

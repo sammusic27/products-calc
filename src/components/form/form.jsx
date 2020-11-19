@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import get from 'lodash/get';
 
-import { ProductField } from '../calc/product';
+import { ProductSummary } from '../calc/productSummary';
 import {calcForm} from "../../utils/calculate";
 import {Properties} from "./properties";
 import { Price } from "../price/price";
@@ -28,49 +28,88 @@ function defaultValues(properties = []){
   return data;
 }
 
+function collectEnabledCollection(values){
+  const data = {};
+  for(let i in values){
+    data[i] = !!values[i];
+  }
+  return data;
+}
+
+function parse(enabled, values){
+  const data = {};
+  for(let i in values){
+    if(enabled[i]){
+      data[i] = values[i];
+    }
+  }
+
+  return data;
+}
+
 export function FormComponent(props){
   const product = props.product;
   const { defaultCount, properties } = product;
+
   const [count, setCount] = useState(defaultCount);
   const [result, setResult] = useState(0);
-  const [values, setValues] = useState(() => {
+
+  const [formValues, setFormValues] = useState(() => {
     return defaultValues(properties);
+  });
+  const [enabled, setEnabled] = useState(() => {
+    return collectEnabledCollection(formValues);
   });
 
   useEffect(() => {
     const { defaultCount, properties } = props.product;
-    const newValues = defaultValues(properties)
-    setValues(newValues)
+    const newValues = defaultValues(properties);
+    const newEnabled = collectEnabledCollection(newValues);
+
+    setFormValues(newValues)
     setCount(defaultCount);
-    setResult(calcForm(product, defaultCount, newValues));
+    setEnabled(newEnabled);
+
+    updateResults(defaultCount, newValues, newEnabled);
   }, [props.product]);
 
   const handleCount = (count) => {
     count = parseInt(count);
     setCount(count);
-    setResult(calcForm(product, count, values));
+    updateResults(count, formValues);
   }
 
-  const handleChange = (data) => {
-    setValues(data);
-    setResult(calcForm(product, count, data));
+  const handleChangeValues = (data) => {
+    setFormValues(data);
+    updateResults(count, data);
+  }
+
+  const handleChangeEnabled = (data) => {
+    setEnabled(data);
+    updateResults(count, formValues, data);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setResult(calcForm(product, count, values));
+    updateResults(count, formValues);
+  }
+
+  const updateResults = (count, values, enabledFields = enabled) => {
+    setResult(calcForm(product, count, parse(enabledFields, values)));
   }
 
   return (
     <Form>
-      <ProductField product={product} count={count} onChange={handleCount} />
+      <ProductSummary product={product} count={count} onChange={handleCount} />
       <hr />
       <Properties
-        onChange={handleChange}
+        onChange={handleChangeValues}
+        onEnabled={handleChangeEnabled}
         properties={properties}
         count={count}
-        values={values}
+        enabled={enabled}
+        values={formValues}
         name={product.name}
       />
       <Row>

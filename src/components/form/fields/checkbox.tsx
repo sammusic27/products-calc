@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 
 type Props = {
@@ -13,6 +13,10 @@ type Props = {
 
 export const CheckboxField = function(props: Props) {
   const [value, setValue] = useState(props.value);
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
 
   const handleChange = (e: any) => {
     setValue(e.target.checked);

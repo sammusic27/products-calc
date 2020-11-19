@@ -23,6 +23,7 @@ export type Product = {
 export type Property = {
   type: 'text' | 'number' | 'checkbox' | 'radio' | 'dropdown',
   label: string,
+  enabled: boolean,
   price: number,
   name: string,
   placeholder?: string

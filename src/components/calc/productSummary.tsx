@@ -11,7 +11,7 @@ type Props = {
   onChange: (values: any) => void
 };
 
-export const ProductField = function(props: Props) {
+export const ProductSummary = function(props: Props) {
 
   const handleChange = (value: any) => {
     props.onChange && props.onChange(value);

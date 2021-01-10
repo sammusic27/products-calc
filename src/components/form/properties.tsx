@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Table} from 'react-bootstrap';
-import cloneDeep from 'lodash/cloneDeep';
 import {CheckboxField} from "./fields/checkbox";
 import {RadioField} from "./fields/radio";
 import {InputField} from "./fields/input";
 import {DropdownField} from "./fields/dropdown";
-import {getPriceFromPropertyByParameters, getTiersFromPropertyByValue} from "../../utils/calculate";
+import {getPriceFromPropertyByParameters, getTiersFromPropertyByValue} from "@Utils/calculate";
 import {TiersComponent} from "../calc/tiers";
 import {Price} from "../price/price";
 import './properties.scss';

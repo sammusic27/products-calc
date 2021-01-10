@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
-import {getProductPrice} from "../../utils/calculate";
+import {getProductPrice} from "@Utils/calculate";
 import {TiersComponent} from "./tiers";
-import {Product} from "../../utils/models/models";
+import {Product} from "@Utils/models/models";
 import {Price} from "../price/price";
 
 type Props = {

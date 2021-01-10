@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import cloneDeep from 'lodash/cloneDeep';
-import { products } from '../../data/data';
-import {parseProductList} from "../utils/productHelper";
+import { stateRows, rowsActions } from "./helper";
 
-const initialState = cloneDeep(parseProductList(products));
+const initialState: any = cloneDeep(stateRows);
 
-const productSlice = createSlice({
+const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {}
-})
+  reducers: rowsActions
+});
 
-export default productSlice.reducer
+export const { pending, failure, completed } = productsSlice.actions;
+export default productsSlice.reducer;

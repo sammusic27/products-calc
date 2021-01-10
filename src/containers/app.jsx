@@ -6,9 +6,9 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-import { Header } from "./header";
-import { Calculator } from './calc/calculator';
-import { ProductList } from './productList/productList';
+import { Header } from "@Components/header";
+import { Calculator } from '@Containers/calculator/calculator';
+import { ProductList } from '@Containers/productList/productList';
 
 export function App(){
   return (

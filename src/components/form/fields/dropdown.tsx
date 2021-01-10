@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
-import {Option} from "../../../utils/models/models";
+import {Option} from "@Utils/models/models";
 
 type Props = {
   name: string,
@@ -15,11 +15,8 @@ type Props = {
 };
 
 export const DropdownField = function(props: Props) {
-  const [value, setValue] = useState(props.value);
-
   const handleChange = (e: any) => {
-    setValue(e.target.checked);
-    props.onChange && props.onChange(e.target.value)
+    props.onChange(e.target.value)
   };
 
 
@@ -42,7 +39,7 @@ export const DropdownField = function(props: Props) {
         <Form.Control
           size={props.size}
           as="select"
-          value={value}
+          value={props.value}
           onChange={handleChange}
         >
           {options}

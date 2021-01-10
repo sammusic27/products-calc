@@ -1,17 +1,24 @@
 import React from "react";
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/css/style';
 
-import { App } from './components/app';
-import store from './reducers/store'
-import { Provider } from 'react-redux'
+import { App } from '@Containers/app';
 
-ReactDOM.render(
-  <React.StrictMode>
+import configureStore from './store';
+const store = configureStore();
+
+const renderApp = () =>
+  render(
     <Provider store={store}>
       <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+    </Provider>,
+    document.getElementById('root')
+  )
+
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./components/App', renderApp);
+}
+
+renderApp();

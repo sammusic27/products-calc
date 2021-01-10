@@ -53,6 +53,16 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      '@Actions': path.resolve(__dirname, '../src/actions'),
+      '@Components': path.resolve(__dirname, '../src/components'),
+      '@Constants': path.resolve(__dirname, '../src/constants'),
+      '@Containers': path.resolve(__dirname, '../src/containers'),
+      '@Hocs': path.resolve(__dirname, '../src/hocs'),
+      '@Reducers': path.resolve(__dirname, '../src/reducers'),
+      '@Services': path.resolve(__dirname, '../src/services'),
+      '@Utils': path.resolve(__dirname, '../src/utils'),
+    },
     extensions: ['.jsx', '.js', '.json', '.ts', '.tsx', '.scss', '.css',],
   }
 };

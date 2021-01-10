@@ -17,8 +17,9 @@ export function parseProductList (products: Array<any> = []): Array<Product> {
     return products.map(parseProduct);
 }
 
-function parseProduct(obj: any): Product {
+export function parseProduct(obj: any): Product {
     const product: Product = {
+        _id: obj._id || uniqueId('id'),
         label: obj.label,
         price: obj.price,
         type: 'product',

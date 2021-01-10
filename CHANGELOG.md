@@ -1,3 +1,15 @@
+##### 2020-11-19 0.2.0
+* Change database usage. Used test remote database for now.
+* Add `Loader` component
+* Add `Message` component
+* Add `Open Close` component
+* Add `Create/Edit Product` form component
+* Add typescript aliases.
+* Add `Containers` into folder structure.
+* Add `@babel/plugin-proposal-class-properties`
+* Add `@babel/plugin-transform-classes`
+* Fix a lot of minor issues.
+
 ##### 2020-11-19 0.1.0
 * Add `Price` component to implement the same view of price in all places
 * Change `sizeLabel` and `sizeField` in all form components.

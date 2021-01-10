@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 
 type Props = {
@@ -10,19 +10,12 @@ type Props = {
   size: undefined | 'sm' | 'lg',
   smLabel?: number,
   smField?: number,
-  onChange?: ((val: any) => void)
+  onChange: ((val: any) => void)
 };
 
 export const CheckboxField = function(props: Props) {
-  const [value, setValue] = useState(props.value);
-
-  useEffect(() => {
-    setValue(props.value);
-  }, [props.value]);
-
   const handleChange = (e: any) => {
-    setValue(e.target.checked);
-    props.onChange && props.onChange(e.target.checked)
+    props.onChange(e.target.checked)
   };
 
   const showLabel = () => {
@@ -47,7 +40,7 @@ export const CheckboxField = function(props: Props) {
           type="checkbox"
           className="checkbox-holder"
           name={props.name}
-          checked={!!value}
+          checked={!!props.value}
           id={props.id}
         />
       </Col>

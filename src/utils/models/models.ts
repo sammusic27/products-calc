@@ -11,6 +11,7 @@ export type Tier = {
 };
 
 export type Product = {
+  _id: string,
   label: string,
   price: number,
   type: 'product',
@@ -23,7 +24,6 @@ export type Product = {
 export type Property = {
   type: 'text' | 'number' | 'checkbox' | 'radio' | 'dropdown',
   label: string,
-  enabled: boolean,
   price: number,
   name: string,
   placeholder?: string

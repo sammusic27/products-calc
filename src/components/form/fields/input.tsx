@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Row, Col, InputGroup } from 'react-bootstrap';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   type: string,
   isEnabledInputGroup: boolean,
   inputGroupLabel: string,
-  value: number | string,
+  value?: number | string,
   size: undefined | 'sm' | 'lg',
   smLabel?: number,
   smField?: number,
@@ -16,11 +16,8 @@ type Props = {
 };
 
 export const InputField = function(props: Props) {
-  const [value, setValue] = useState(props.value);
-
   const handleChange = (e: any) => {
-    setValue(e.target.value);
-    props.onChange && props.onChange(e.target.value)
+    props.onChange(e.target.value)
   };
 
   const toDisplayInputGroup = () => {
@@ -50,7 +47,7 @@ export const InputField = function(props: Props) {
             size={props.size}
             type={props.type}
             onChange={handleChange}
-            value={value}
+            value={props.value}
           />
           {toDisplayInputGroup()}
         </InputGroup>

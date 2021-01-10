@@ -1,6 +1,21 @@
 const BASE_URL = 'https://products-5e7f.restdb.io/rest/';
-const urlParams = new URLSearchParams(window.location.search);
-const X_APIKEY = urlParams.get('api-key');
+const keyForLocalStorage = 'x-apikey';
+
+let X_APIKEY: string | null = null;
+function getParams(){
+  const hash = window.location.hash.split('?');
+
+  if(hash.length > 1){
+    const urlParams = new URLSearchParams(hash[1]);
+
+    X_APIKEY = urlParams.get('api-key');
+
+    if(X_APIKEY){
+      localStorage.setItem(keyForLocalStorage, X_APIKEY)
+    }
+  }
+}
+getParams();
 
 type Options = {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -35,7 +50,7 @@ export function api(queryData: Options){
     Accept: 'application/json',
     'Content-Type': 'application/json',
     // @ts-ignore
-    'x-apikey': X_APIKEY
+    'x-apikey': X_APIKEY || localStorage.getItem(keyForLocalStorage)
   };
 
   // collect all fetch parameters

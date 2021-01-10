@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import { Form, Row, Col, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
-import {Option} from "../../../utils/models/models";
+import {Option} from "@Utils/models/models";
 
 type Props = {
   name: string,
@@ -15,11 +15,8 @@ type Props = {
 };
 
 export const RadioField = function(props: Props) {
-  const [value, setValue] = useState(props.value);
-
   const handleChange = (value: any) => {
-    setValue(value);
-    props.onChange && props.onChange(value)
+    props.onChange(value)
   };
 
   const options = props.options.map((item, index) => {
@@ -44,7 +41,7 @@ export const RadioField = function(props: Props) {
           type="radio"
           onChange={handleChange}
           name="options"
-          defaultValue={value}
+          defaultValue={props.value}
           size={props.size}
         >
           {options}

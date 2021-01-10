@@ -1,4 +1,4 @@
-##### 2020-11-19 0.2.0
+##### 2021-01-10 0.2.0
 * Change database usage. Used test remote database for now.
 * Add `Loader` component
 * Add `Message` component

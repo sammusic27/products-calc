@@ -1,3 +1,6 @@
+##### 2021-01-10 0.2.2
+* Add login form
+
 ##### 2021-01-10 0.2.1
 * Remove `text`, `number` and `checkbox` types from properties.
 * Fix `CalculatorForm`. It was refactored to class components

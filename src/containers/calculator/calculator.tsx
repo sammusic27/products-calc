@@ -19,11 +19,11 @@ export function Calculator(){
   }, []);
 
   const [value, setValue] = useState(() => {
-    return products.rows[0]?.name;
+    return products.rows[0]?._id;
   });
 
-  const options = products.rows.map((obj: Product) => ({label: obj.label, value: obj.name}));
-  let product = products.rows.find((obj: Product) => obj.name === value);
+  const options = products.rows.map((obj: Product) => ({label: obj.label, value: obj._id}));
+  let product = products.rows.find((obj: Product) => obj._id === value);
 
   const handleChange = (val: any) => {
     setValue(val);

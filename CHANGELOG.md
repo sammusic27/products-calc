@@ -1,3 +1,7 @@
+##### 2021-01-10 0.2.1
+* Remove `text`, `number` and `checkbox` types from properties.
+* Fix `CalculatorForm`. It was refactored to class components
+
 ##### 2021-01-10 0.2.0
 * Change database usage. Used test remote database for now.
 * Add `Loader` component

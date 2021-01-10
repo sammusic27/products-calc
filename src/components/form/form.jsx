@@ -1,26 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import get from 'lodash/get';
+import camelCase from 'lodash/camelCase';
 
-import { ProductSummary } from '../calc/productSummary';
-import {calcForm} from "../../utils/calculate";
-import {Properties} from "./properties";
-import { Price } from "../price/price";
+import { ProductSummary } from '@Components/calc/productSummary';
+import { calcForm } from "@Utils/calculate";
+import { Price } from "@Components/price";
+
+import { Properties } from "./properties";
 
 function defaultValues(properties = []){
   const data = {};
-  properties.forEach(prop => {
+  properties.forEach((prop) => {
+    const name = generateName(prop);
     switch (prop.type){
       case 'text':
       case 'number':
-        data[prop.name] = prop.price;
+        data[name] = prop.price;
         break;
       case 'radio':
       case 'dropdown':
-        data[prop.name] = get(prop, 'options[0].value', 0);
+        data[name] = get(prop, 'options[0].value', 0);
         break;
       case 'checkbox':
-        data[prop.name] = true;
+        data[name] = true;
         break;
     }
   });
@@ -28,11 +31,16 @@ function defaultValues(properties = []){
   return data;
 }
 
-function collectEnabledCollection(values){
+function generateName(property){
+  return camelCase(property.label);
+}
+
+function collectEnabledCollection(properties){
   const data = {};
-  for(let i in values){
-    data[i] = !!values[i];
-  }
+
+  properties.forEach((property) => {
+    data[generateName(property)] = true;
+  });
   return data;
 }
 
@@ -47,81 +55,96 @@ function parse(enabled, values){
   return data;
 }
 
-export function FormComponent(props){
-  const product = props.product;
-  const { defaultCount, properties } = product;
 
-  const [count, setCount] = useState(defaultCount);
-  const [result, setResult] = useState(0);
+export class FormComponent extends React.Component {
+  static displayName = 'CalculatorForm';
 
-  const [formValues, setFormValues] = useState(() => {
-    return defaultValues(properties);
-  });
-  const [enabled, setEnabled] = useState(() => {
-    return collectEnabledCollection(formValues);
-  });
+  constructor(props) {
+    super();
 
-  useEffect(() => {
-    const { defaultCount, properties } = props.product;
-    const newValues = defaultValues(properties);
-    const newEnabled = collectEnabledCollection(newValues);
+    const product = props.product;
+    const { defaultCount, properties } = product;
 
-    setFormValues(newValues)
-    setCount(defaultCount);
-    setEnabled(newEnabled);
+    this.state = {
+      count: defaultCount || 1,
+      formValues: defaultValues(properties),
+      enabled: collectEnabledCollection(properties),
+    };
+  }
 
-    updateResults(defaultCount, newValues, newEnabled);
-  }, [props.product]);
+  UNSAFE_componentWillReceiveProps(nextProps){
+    if(this.props.product._id !== nextProps.product._id){
+      const product = nextProps.product;
+      const { defaultCount, properties } = product;
 
-  const handleCount = (count) => {
+      this.setState({
+        count: defaultCount || 1,
+        formValues: defaultValues(properties),
+        enabled: collectEnabledCollection(properties),
+      });
+    }
+  }
+
+  handleCount = (count) => {
     count = parseInt(count);
-    setCount(count);
-    updateResults(count, formValues);
+    this.setState({ count });
   }
 
-  const handleChangeValues = (data) => {
-    setFormValues(data);
-    updateResults(count, data);
+  handleChangeValues = (data) => {
+    this.setState({ formValues: data });
   }
 
-  const handleChangeEnabled = (data) => {
-    setEnabled(data);
-    updateResults(count, formValues, data);
+  handleChangeEnabled = (data) => {
+    this.setState({
+      enabled: data
+    });
   }
 
-  const handleSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
-
-    updateResults(count, formValues);
+    this.updateResults();
   }
 
-  const updateResults = (count, values, enabledFields = enabled) => {
-    setResult(calcForm(product, count, parse(enabledFields, values)));
+  updateResults = () => {
+    const { count, values, enabledFields } = this.state;
+
+    const result = calcForm(this.props.product, count, parse(enabledFields, values));
+
+    this.setState({
+      result
+    });
   }
 
-  return (
-    <Form>
-      <ProductSummary product={product} count={count} onChange={handleCount} />
-      <hr />
-      <Properties
-        onChange={handleChangeValues}
-        onEnabled={handleChangeEnabled}
-        properties={properties}
-        count={count}
-        enabled={enabled}
-        values={formValues}
-        name={product.name}
-      />
-      <Row>
-        <Col>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
-            Посчитать
-          </Button>
-        </Col>
-        <Col>
-          <Price price={result} size={"xl"} />
-        </Col>
-      </Row>
-    </Form>
-  );
+  render (){
+    const { product } = this.props;
+    const { count, enabled, formValues } = this.state;
+
+    const result = calcForm(product, count, parse(enabled, formValues));
+
+    return (
+      <Form>
+        <ProductSummary product={product} count={count} onChange={this.handleCount} />
+        <hr />
+        <Properties
+          onChange={this.handleChangeValues}
+          onEnabled={this.handleChangeEnabled}
+          properties={product.properties}
+          count={count}
+          enabled={enabled}
+          values={formValues}
+          name={product.name}
+        />
+        <Row>
+          <Col>
+            <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+              Посчитать
+            </Button>
+          </Col>
+          <Col>
+            <Price price={result} size={"xl"} />
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
 }

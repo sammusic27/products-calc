@@ -6,6 +6,7 @@ type Props = {
   name: string,
   title?: string,
   tiers: Array<any>,
+  errors?: any,
   proposedPrice?: number,
   onChangeTiers: (tiers: Array<any>) => void,
 };
@@ -14,6 +15,7 @@ export class TiersList extends React.Component<Props>{
 
   static defaultProps = {
     tiers: [],
+    errors: [],
     title: '',
     proposedPrice: 0
   };
@@ -54,7 +56,7 @@ export class TiersList extends React.Component<Props>{
   }
 
   renderTiers() {
-    const {tiers, name, proposedPrice} = this.props;
+    const {tiers, name, proposedPrice, errors} = this.props;
     return tiers.map((tier: any, index: number) => {
       return (
         <Row key={index}>
@@ -70,7 +72,11 @@ export class TiersList extends React.Component<Props>{
                 placeholder="Введите Min"
                 onChange={(e) => this.handleChangeTier('min', e.target.value, index)}
                 value={tier.min}
+                isInvalid={!!errors[index]?.min}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors[index]?.min}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -83,7 +89,11 @@ export class TiersList extends React.Component<Props>{
                 defaultValue="0"
                 onChange={(e) => this.handleChangeTier('max', e.target.value, index)}
                 value={tier.max}
+                isInvalid={!!errors[index]?.max}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors[index]?.max}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -96,7 +106,11 @@ export class TiersList extends React.Component<Props>{
                 defaultValue={proposedPrice}
                 onChange={(e) => this.handleChangeTier('price', e.target.value, index)}
                 value={tier.price}
+                isInvalid={!!errors[index]?.price}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors[index]?.price}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col sm={1}>

@@ -4,6 +4,7 @@ import isArray from 'lodash/isArray';
 import { Form, Row, Col, Button} from 'react-bootstrap';
 import {Options} from "@Components/productList/productForm/options";
 import {TiersList} from "@Components/productList/productForm/tierList";
+import {OpenClose} from "@Components/openClose";
 
 type Props = {
   properties: Array<any>,
@@ -73,7 +74,7 @@ export class ProductProperties extends React.Component<Props, State> {
 
     return (
       <>
-        <h5>Варианты для параметра: {property.label}</h5>
+        <h6>Варианты для параметра: {property.label}</h6>
         <Row>
           <Col sm={1}>
             ---
@@ -89,6 +90,27 @@ export class ProductProperties extends React.Component<Props, State> {
         </Row>
         <Button size="sm" variant="success" onClick={() => this.onAddPropertyOption(propertyIndex)}>+ Вариант Параметра</Button>
       </>
+    );
+  }
+
+  renderPrice(property: any, index: number){
+    if(['dropdown', 'radio'].includes(property.type)){
+      return null;
+    }
+
+    return (
+      <Col>
+        <Form.Group controlId={`propertyPrice-${index}`}>
+          <Form.Label>Цена</Form.Label>
+          <Form.Control
+            type="number"
+            size="sm"
+            placeholder="Введите Цену"
+            onChange={(e) => this.handleChangeProperty('price', e.target.value, index)}
+            value={property['price']}
+          />
+        </Form.Group>
+      </Col>
     );
   }
 
@@ -109,7 +131,8 @@ export class ProductProperties extends React.Component<Props, State> {
                 />
               </Form.Group>
             </Col>
-
+          </Row>
+          <Row>
             <Col>
               <Form.Group controlId={`propertyType-${index}`}>
                 <Form.Label>Тип</Form.Label>
@@ -120,33 +143,36 @@ export class ProductProperties extends React.Component<Props, State> {
                   onChange={(e) => this.handleChangeProperty('type', e.target.value, index)}
                   value={property['type']}
                 >
+                  <option value="">Выберите тип</option>
                   <option value="text">Текст</option>
-                  <option value="number">Число</option>
-                  <option value="checkbox">Чекбокс</option>
+                  {/*<option value="number">Число</option>*/}
+                  {/*<option value="checkbox">Чекбокс</option>*/}
                   <option value="radio">РадиоБатоны</option>
                   <option value="dropdown">Дропдаун</option>
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col sm={1}>
-              <div className="form-group">
-                <Form.Label>&nbsp;</Form.Label>
-                <div>
-                  <Button size="sm" variant="danger" onClick={() => this.onRemoveProperty(index)}>X</Button>
-                </div>
-              </div>
-            </Col>
+            {this.renderPrice(property, index)}
           </Row>
           {this.renderOptions(property, index)}
+          <OpenClose
+            btnTitle="Показать дополнительные настройки параметра"
+          >
+            <Row>
+              <Col>
+                <TiersList
+                  name={property.label}
+                  tiers={property.tiers}
+                  proposedPrice={property.price}
+                  title="Цена от количества"
+                  onChangeTiers={(tiers) => this.handleChangePropertyTiers(index, tiers)}
+                />
+              </Col>
+            </Row>
+          </OpenClose>
           <Row>
             <Col>
-              <TiersList
-                name={property.label}
-                tiers={property.tiers}
-                proposedPrice={property.price}
-                title="Цена от количества"
-                onChangeTiers={(tiers) => this.handleChangePropertyTiers(index, tiers)}
-              />
+              <Button size="sm" variant="danger" block onClick={() => this.onRemoveProperty(index)}>X</Button>
             </Col>
           </Row>
         </div>

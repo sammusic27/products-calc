@@ -7,6 +7,7 @@ import { OpenClose } from "@Components/openClose";
 
 type Props = {
   product: any,
+  errors: any,
   onSubmit: () => void
 };
 
@@ -16,7 +17,6 @@ type State = {
 };
 
 export class ProductForm extends React.Component<Props, State> {
-
   constructor(props: Props) {
     super(props);
 
@@ -52,6 +52,7 @@ export class ProductForm extends React.Component<Props, State> {
 
   render() {
     const { product } = this.state;
+    const { errors } = this.props;
 
     return (
       <Form>
@@ -63,9 +64,12 @@ export class ProductForm extends React.Component<Props, State> {
             placeholder="Введите Название Продукта"
             onChange={(e) => this.handleChange('label', e.target.value)}
             value={product['label']}
+            isInvalid={!!errors.label}
           />
         </Form.Group>
-
+        <Form.Control.Feedback type="invalid">
+          {errors.label}
+        </Form.Control.Feedback>
         <Row>
           <Col>
             <Form.Group controlId="productPrice">
@@ -77,7 +81,11 @@ export class ProductForm extends React.Component<Props, State> {
                 defaultValue="0"
                 onChange={(e) => this.handleChange('price', e.target.value)}
                 value={product['price']}
+                isInvalid={!!errors.price}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.price}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col>
@@ -90,7 +98,11 @@ export class ProductForm extends React.Component<Props, State> {
                 defaultValue="1"
                 onChange={(e) => this.handleChange('count', e.target.value)}
                 value={product['count']}
+                isInvalid={!!errors.count}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.count}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -103,6 +115,7 @@ export class ProductForm extends React.Component<Props, State> {
           <TiersList
             name={product.label}
             tiers={product.tiers}
+            errors={this.props.errors.productTiers}
             proposedPrice={product.price}
             title="Цена от количества продукта"
             onChangeTiers={this.handleChangeProductTiers}

@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 import forEach from 'lodash/forEach';
+import camelCase from 'lodash/camelCase';
 import {Product, Tier} from "./models/models";
 
 export function calcForm(product: Product, count: number, values: any){
@@ -10,7 +11,7 @@ export function calcForm(product: Product, count: number, values: any){
 
     let priceProperty = 0;
     if(product.properties){
-      const property = product.properties.find(i => i.name === key);
+      const property = product.properties.find(i => camelCase(i.label) === key);
       priceProperty = getPriceFromPropertyByParameters(property, values[key], count);
     }
 
@@ -90,6 +91,10 @@ export function getTiersFromPropertyByValue(property: any, value: any){
 
 export function getTierByPrice(tiers: Array<Tier>, count: number) : number{
   let result: number = 0;
+
+  if(tiers.length === 0){
+    return result;
+  }
 
   const found = tiers.find(item => item.min <= count && item.max >= count);
 

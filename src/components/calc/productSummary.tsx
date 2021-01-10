@@ -30,6 +30,7 @@ export const ProductSummary = function(props: Props) {
             onChange={(e) => handleChange(e.target.value)}
             min="0"
             step="1"
+            value={props.count}
             defaultValue={props.product.defaultCount}
           />
           <InputGroup.Prepend>

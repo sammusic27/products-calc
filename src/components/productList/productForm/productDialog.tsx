@@ -2,13 +2,11 @@ import React, { createRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap';
 import isEmpty from 'lodash/isEmpty';
-import set from 'lodash/set';
 
 import { ProductForm } from "./productForm";
 import { withModal } from "@Hocs/withModalOld";
 import { actions } from "@Actions/index";
 import {Loader} from "@Components/loader";
-import {Tier} from "@Utils/models/models";
 
 type Props = {
   onHide: () => void,
@@ -18,6 +16,26 @@ type Props = {
 
 interface RootProduct {
   product: any
+}
+
+function validationNumber(value: any, options: any = {}){
+  if(isNaN(parseFloat(value))){
+    return 'Не число';
+  }
+
+  if(options.notZero && value <= 0){
+    return 'Не может быть менее или равно нулю';
+  }
+
+  return '';
+}
+
+function validationText(value: number, options?: any){
+  if(!value){
+    return 'Обязательное поле';
+  }
+
+  return '';
 }
 
 function ProductFormDialogComponent(props: Props){
@@ -42,18 +60,10 @@ function ProductFormDialogComponent(props: Props){
 
     const errors: any = {};
 
-    // if(!values['label']){
-    //   errors['label'] = 'Введите название продукта';
-    // }
-    //
-    // if(values['price'] < 0){
-    //   errors['price'] = 'Цена продукта не может быть ниже нуля';
-    // }
-    //
-    // if(values['count'] < 1){
-    //   errors['count'] = 'Количество не может быть ниже еденицы';
-    // }
-    //
+    // errors['label'] = validationText(values.label);
+    // errors['price'] = validationNumber(values.price);
+    // errors['count'] = validationNumber(values.count);
+
     // if(values.tiers){
     //   values.tiers.forEach((tier: Tier, index: number) => {
     //     if(isEmpty(errors['productTiers'])) {

@@ -4,6 +4,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 import {TiersList} from "./tierList";
 import {ProductProperties} from "./productProperties";
 import { OpenClose } from "@Components/openClose";
+import {InputField} from "@Components/form/fields/input";
 
 type Props = {
   product: any,
@@ -56,55 +57,43 @@ export class ProductForm extends React.Component<Props, State> {
 
     return (
       <Form>
-        <Form.Group controlId="productName">
-          <Form.Label>Название Продукта</Form.Label>
-          <Form.Control
-            type="text"
-            size="sm"
-            placeholder="Введите Название Продукта"
-            onChange={(e) => this.handleChange('label', e.target.value)}
-            value={product['label']}
-            isInvalid={!!errors.label}
-          />
-        </Form.Group>
-        <Form.Control.Feedback type="invalid">
-          {errors.label}
-        </Form.Control.Feedback>
+        <InputField
+          label="Название Продукта"
+          name="productName"
+          type="text"
+          placeholder="Введите Название Продукта"
+          inline={false}
+          onChange={(value) => this.handleChange('label', value)}
+          value={product['label']}
+          error={errors.label}
+        />
         <Row>
-          <Col>
-            <Form.Group controlId="productPrice">
-              <Form.Label>Цена</Form.Label>
-              <Form.Control
-                type="number"
-                size="sm"
-                placeholder="Введите Цену"
-                defaultValue="0"
-                onChange={(e) => this.handleChange('price', e.target.value)}
-                value={product['price']}
-                isInvalid={!!errors.price}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.price}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="productCount">
-              <Form.Label>Количество</Form.Label>
-              <Form.Control
-                type="number"
-                size="sm"
-                placeholder="Введите Колличество"
-                defaultValue="1"
-                onChange={(e) => this.handleChange('count', e.target.value)}
-                value={product['count']}
-                isInvalid={!!errors.count}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.count}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
+          <InputField
+            as={Col}
+            label="Цена"
+            min="0"
+            name="productPrice"
+            type="number"
+            placeholder="Введите Цену"
+            defaultValue="0"
+            inline={false}
+            onChange={(value) => this.handleChange('price', value)}
+            value={product['price']}
+            error={errors.price}
+          />
+          <InputField
+            as={Col}
+            label="Количество"
+            min="1"
+            name="productCount"
+            type="number"
+            placeholder="Введите Колличество"
+            defaultValue="1"
+            inline={false}
+            onChange={(value) => this.handleChange('count', value)}
+            value={product['count']}
+            error={errors.count}
+          />
         </Row>
 
         <hr />

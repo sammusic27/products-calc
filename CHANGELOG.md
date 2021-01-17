@@ -1,3 +1,7 @@
+##### 2021-01-17 0.2.3
+* Rework InputField.
+* Add validation of InputField
+
 ##### 2021-01-10 0.2.2
 * Add login form
 

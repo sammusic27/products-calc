@@ -1,3 +1,6 @@
+##### 2021-03-11 0.2.4
+* update dependencies to up to date
+
 ##### 2021-01-17 0.2.3
 * Rework InputField.
 * Add validation of InputField

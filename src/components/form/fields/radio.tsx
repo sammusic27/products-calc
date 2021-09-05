@@ -1,6 +1,9 @@
 import React  from 'react';
-import { Form, Row, Col, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Form, Row, Col, ToggleButton as ToggleButtonOriginal, ToggleButtonGroup } from 'react-bootstrap';
 import {Option} from "@Utils/models/models";
+
+// TODO: check types
+const ToggleButton: any = ToggleButtonOriginal;
 
 type Props = {
   name: string,
@@ -21,7 +24,7 @@ export const RadioField = function(props: Props) {
 
   const options = props.options.map((item, index) => {
     return (
-      <ToggleButton key={index} value={item.value}>{item.label}</ToggleButton>
+      <ToggleButton key={index} id={index} value={item.value}>{item.label}</ToggleButton>
     );
   });
 

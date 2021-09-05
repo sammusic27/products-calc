@@ -33,9 +33,7 @@ export const InputField = function(props: Props) {
 
   const toDisplayInputGroup = () => {
     const tag = (
-      <InputGroup.Prepend>
-        <InputGroup.Text>{props.inputGroupLabel}</InputGroup.Text>
-      </InputGroup.Prepend>
+      <InputGroup.Text>{props.inputGroupLabel}</InputGroup.Text>
     );
 
     return props.isEnabledInputGroup ? tag : null;

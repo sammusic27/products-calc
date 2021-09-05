@@ -1,5 +1,10 @@
+##### 2021-09-05 0.2.5
+* update dependencies to up to date to fix vulnerabilities
+* * update bootstrap from 4.x to 5.x
+* fix devServer warnings
+
 ##### 2021-03-11 0.2.4
-* update dependencies to up to date
+* update dependencies to up to date`
 
 ##### 2021-01-17 0.2.3
 * Rework InputField.

@@ -1,5 +1,5 @@
 ##### 2022-01-16 0.2.6
-* update dependencies to up to date to fix vulnerabilities
+* update dependencies to up to date to fix vulnerabilities.
 
 ##### 2021-09-05 0.2.5
 * update dependencies to up to date to fix vulnerabilities
